@@ -26,6 +26,7 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('body' => $comment)));
 
 // Execute and parse response.
 $response = curl_exec($ch);
+print_r($response);
 // $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
 // dpm($code = curl_getinfo($ch, CURLINFO_HTTP_CODE));
 // $header = trim(substr($response, 0, $header_size));
