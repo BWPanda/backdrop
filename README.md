@@ -1,3 +1,6 @@
+Backdrop
+========
+
 Backdrop is a full-featured content management system that allows non-technical
 users to manage a wide variety of content. It can be used to create all kinds of
 websites including blogs, image galleries, social networks, intranets, and more.
@@ -84,5 +87,5 @@ All Backdrop code is Copyright 2001 - 2016 by the original authors.
 
 Backdrop also includes works under different copyright notices that are
 distributed according to the terms of the GNU General Public License or a
-compatible license. These individual works may have specific copyright 
+compatible license. These individual works may have specific copyright
 information noted within their source code files or directories.
