@@ -20,7 +20,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
 // Execute and parse the response.
-$response = curl_exec($ch));
+$response = curl_exec($ch);
 $code = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
 if ($code == 200) {
   print_r($comments = json_decode($response));
