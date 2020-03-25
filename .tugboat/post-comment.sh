@@ -14,25 +14,15 @@ Password: password";
 $ch = curl_init('https://api.github.com/repos/' . getenv('TUGBOAT_GITHUB_OWNER') . '/' . getenv('TUGBOAT_GITHUB_REPO') . '/issues/' . getenv('TUGBOAT_GITHUB_PR') . '/comments');
 
 // Set options.
-print 'Token: ' . getenv('BACKDROP_GITHUB_TOKEN') . "\n";
 curl_setopt($ch, CURLOPT_HTTPHEADER, array(
   'Authorization: token ' . getenv('BACKDROP_GITHUB_TOKEN'),
   'Content-Type: application/json',
   'Accept: application/vnd.github.v3+json',
   'User-Agent: Backdrop CMS',
 ));
-curl_setopt($ch, CURLOPT_HEADER, TRUE);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 curl_setopt($ch, CURLOPT_POST, TRUE);
 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('body' => $comment)));
 
-// Execute and parse response.
-$response = curl_exec($ch);
-print_r($response);
-// $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-// dpm($code = curl_getinfo($ch, CURLINFO_HTTP_CODE));
-// $header = trim(substr($response, 0, $header_size));
-// dpm($body = json_decode(substr($response, $header_size)));
-
-// Close session.
+// Execute, then close session.
+curl_exec($ch);
 curl_close($ch);
