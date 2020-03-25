@@ -17,7 +17,7 @@ services:
         # Generate a unique hash_salt to secure the site.
         - echo "\$settings['hash_salt'] = '$(openssl rand -hex 32)';" >> $TUGBOAT_ROOT/settings.local.php
         # Create and set the config directories.
-        - echo "Update ID: $TUGBOAT_PREVIEW_ID\n"
+        - echo "Update ID\: $TUGBOAT_PREVIEW_ID\n"
         - mkdir $TUGBOAT_ROOT/files/config_$TUGBOAT_PREVIEW_ID
         - mkdir $TUGBOAT_ROOT/files/config_$TUGBOAT_PREVIEW_ID/active
         - mkdir $TUGBOAT_ROOT/files/config_$TUGBOAT_PREVIEW_ID/staging
@@ -29,7 +29,7 @@ services:
         - find $TUGBOAT_ROOT/files $TUGBOAT_ROOT/layouts $TUGBOAT_ROOT/modules $TUGBOAT_ROOT/themes -type f -exec chmod 0664 {} \;
       build:
         # Clear out active config (needed when rebuilding/reinstalling).
-        - echo "Build ID: $TUGBOAT_PREVIEW_ID\n"
+        - echo "Build ID\: $TUGBOAT_PREVIEW_ID\n"
         - rm $TUGBOAT_ROOT/files/config_$TUGBOAT_PREVIEW_ID/active/*
         # Install Backdrop.
         - cd $TUGBOAT_ROOT && ./core/scripts/install.sh --db-url=mysql://tugboat:tugboat@mariadb/tugboat --account-pass=password
