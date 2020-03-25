@@ -22,6 +22,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 ));
 curl_setopt($ch, CURLOPT_POST, TRUE);
 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('body' => $comment)));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
 // Execute, then close session.
 curl_exec($ch);
