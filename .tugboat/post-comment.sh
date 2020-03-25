@@ -13,9 +13,8 @@ Password: password";
 $ch = curl_init("https://api.github.com/repos/$TUGBOAT_GITHUB_OWNER/$TUGBOAT_GITHUB_REPO/issues/$TUGBOAT_GITHUB_PR/comments");
 
 // Set options.
-print 'Token: ' . getenv('BACKDROP_GITHUB_TOKEN') . "\n";
 curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-  'Authorization: token ' . $BACKDROP_GITHUB_TOKEN,
+  'Authorization: token ' . getenv('BACKDROP_GITHUB_TOKEN'),
   'Content-Type: application/json',
   'Accept: application/vnd.github.v3+json',
   'User-Agent: Backdrop CMS',
