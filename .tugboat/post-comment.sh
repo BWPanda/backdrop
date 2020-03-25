@@ -4,9 +4,10 @@
  * Post a comment on the PR with login details.
  */
 
-$comment = "Tugboat has finished building a preview for this pull request!\n\n
-Website: " . getenv('TUGBOAT_DEFAULT_SERVICE_URL') . "\n
-Username: admin\n
+$comment = "Tugboat has finished building a preview for this pull request!
+
+Website: " . getenv('TUGBOAT_DEFAULT_SERVICE_URL') . "
+Username: admin
 Password: password";
 
 // Initialise session.
