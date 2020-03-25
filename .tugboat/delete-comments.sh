@@ -1,14 +1,11 @@
 #!/usr/bin/env php
 <?php
 /**
- * Post a comment in the PR with login details.
+ * Delete any previous comments in the PR about this preview.
  */
 
-$comment = 'Tugboat has finished building a preview for this pull request!
-
-Website: ' . getenv('TUGBOAT_DEFAULT_SERVICE_URL') . '
-Username: admin
-Password: password';
+$text = 'Tugboat has finished building a preview for this pull request!';
+$url = getenv('TUGBOAT_DEFAULT_SERVICE_URL');
 
 // Initialise session.
 $ch = curl_init('https://api.github.com/repos/' . getenv('TUGBOAT_GITHUB_OWNER') . '/' . getenv('TUGBOAT_GITHUB_REPO') . '/issues/' . getenv('TUGBOAT_GITHUB_PR') . '/comments');
@@ -20,10 +17,10 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
   'Accept: application/vnd.github.v3+json',
   'User-Agent: Backdrop CMS',
 ));
-curl_setopt($ch, CURLOPT_POST, TRUE);
-curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('body' => $comment)));
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
-// Execute, then close session.
-curl_exec($ch);
+// Execute and parse the response.
+print_r($response = curl_exec($ch));
+
+// Close session.
 curl_close($ch);
