@@ -180,7 +180,7 @@ function standard_install() {
   // Create an initial post to welcome users on install.
   $post = new Node(
     array(
-      'title' => st('Your first post!'),
+      'title' => st('Your 500th post!'),
       'body' => array(
         LANGUAGE_NONE => array(
           array(
