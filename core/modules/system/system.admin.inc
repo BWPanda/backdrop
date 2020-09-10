@@ -662,7 +662,7 @@ function system_modules($form, $form_state = array()) {
     // Generate link for module's configuration page, if provided.
     if ($module->status && isset($module->info['configure'])) {
       $configure_link = menu_get_item($module->info['configure']);
-      if ($configure_link['access']) {
+      if (is_array($configure_link) && $configure_link['access']) {
         $extra['links']['configure'] = array(
           'title' => t('Configure'),
           'href' => $configure_link['href'],
@@ -704,6 +704,7 @@ function system_modules($form, $form_state = array()) {
       ),
     );
   }
+  ksort($form['modules']);
 
   $form['actions'] = array('#type' => 'actions');
   $form['actions']['submit'] = array(
@@ -1499,11 +1500,12 @@ function system_site_information_settings_submit($form, &$form_state) {
   }
 
   if ($form_state['values']['site_logo_path']) {
+    $form_state['values']['site_logo_attributes'] = array();
     $dimensions = @getimagesize($form_state['values']['site_logo_path']);
-    $form_state['values']['site_logo_attributes'] = array(
-      'width' => $dimensions[0],
-      'height' => $dimensions[1],
-    );
+    if (!empty($dimensions)) {
+      $form_state['values']['site_logo_attributes']['width'] = $dimensions[0];
+      $form_state['values']['site_logo_attributes']['height'] = $dimensions[1];
+    }
   }
   else {
     $form_state['values']['site_logo_attributes'] = array(
@@ -1577,7 +1579,7 @@ function system_cron_settings($form, &$form_state) {
   $form['cron']['cron_safe_threshold'] = array(
     '#type' => 'select',
     '#title' => t('Run cron every'),
-    '#description' => t('More information about setting up scheduled tasks can be found by <a href="@url">reading the cron tutorial on drupal.org</a>.', array('@url' => url('http://drupal.org/cron'))),
+    '#description' => t('More information about setting up scheduled tasks can be found by <a href="@url">reading the cron tutorial</a>.', array('@url' => url('https://backdropcms.org/cron'))),
     '#default_value' => config('system.core')->get('cron_safe_threshold'),
     '#options' => array(0 => t('Never')) + backdrop_map_assoc(array(600, 1800, 3600, 10800, 21600, 43200, 86400, 604800), 'format_interval'),
   );
@@ -1858,7 +1860,7 @@ function system_file_system_settings() {
     '#type' => 'checkbox',
     '#title' => t('Lowercase transliterated file names'),
     '#default_value' => config_get('system.core', 'file_transliterate_lowercase'),
-    '#description' => t('This is a recommended setting to prevent issues with case-insensitive file systems. It has no effect if transliteration has been disabled.'),
+    '#description' => t('Enable to convert file names to lowercase. This is recommended to prevent issues with case-insensitive file systems.'),
     '#states' => array(
       'invisible' => array(
         'input[name="file_transliterate_uploads"]' => array('checked' => FALSE),
@@ -2425,7 +2427,7 @@ function system_configure_date_formats_form($form, &$form_state, $format = NULL)
     '#title' => t('Machine-readable name'),
     '#description' => t('A unique machine-readable name. Can only contain lowercase letters, numbers, and underscores.'),
     '#disabled' => !empty($format),
-    '#default_value' => $format['name'],
+    '#default_value' => !empty($format) ? $format['name'] : '',
     '#machine_name' => array(
       'exists' => 'system_date_format_load',
       'source' => array('label'),
@@ -2439,7 +2441,7 @@ function system_configure_date_formats_form($form, &$form_state, $format = NULL)
     '#type' => 'textfield',
     '#title' => t('Format string'),
     '#maxlength' => 100,
-    '#description' => t('A date format using PHP date and time codes. See the <a href="@url">PHP manual</a> for available options.', array('@url' => 'http://php.net/manual/function.date.php')),
+    '#description' => t('A date format using PHP date and time codes. See the <a href="@url" target="_blank">PHP manual</a> for available options.', array('@url' => 'https://www.php.net/manual/datetime.format.php#refsect1-datetime.format-parameters')),
     '#placeholder' => t('e.g. F j Y'),
     '#default_value' => $pattern,
     '#field_suffix' => '<small class="pattern-preview">' . $preview . '</small>',
