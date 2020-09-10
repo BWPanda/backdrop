@@ -2,8 +2,8 @@
  * Generic elements.
  */
 body {
-  color: #000;
-  background: #fafafa;
+  color: red;
+  background: green;
   font: normal 16px/1.538 "Open Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
 }
 a,
