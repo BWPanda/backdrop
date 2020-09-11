@@ -24,9 +24,6 @@ services:
         - chown -R www-data:www-data $TUGBOAT_ROOT
         - find $TUGBOAT_ROOT/files $TUGBOAT_ROOT/layouts $TUGBOAT_ROOT/modules $TUGBOAT_ROOT/themes -type d -exec chmod 2775 {} \;
         - find $TUGBOAT_ROOT/files $TUGBOAT_ROOT/layouts $TUGBOAT_ROOT/modules $TUGBOAT_ROOT/themes -type f -exec chmod 0664 {} \;
-      build:
-        # Delete previous comments in the PR.
-        - cd $TUGBOAT_ROOT/.tugboat && ./delete-comments.sh
         # Clear out active config (needed when rebuilding/reinstalling).
         - find $TUGBOAT_ROOT/files/config/active -mindepth 1 -delete
         # Generate and store a random password for the admin user.
@@ -36,6 +33,9 @@ services:
         # Fix config permissions after install.
         - chown -R www-data:www-data $TUGBOAT_ROOT/files/config/active
         - find $TUGBOAT_ROOT/files/config/active -type f -exec chmod 0664 {} \;
+      build:
+        # Delete previous comments in the PR.
+        - cd $TUGBOAT_ROOT/.tugboat && ./delete-comments.sh
         # Post a comment in the PR.
         - cd $TUGBOAT_ROOT/.tugboat && ./post-comment.sh
   mariadb:
@@ -44,6 +44,6 @@ services:
       init:
         # Configure database for UTF-8: https://api.backdropcms.org/database-configuration#utf8mb4
         - echo "[mysqld]\ninnodb_large_prefix=true\ninnodb_file_format=barracuda\ninnodb_file_per_table=true" >> /etc/mysql/conf.d/utf8mb.conf
-      build:
+      update:
         # Drop and re-create the database (needed when rebuilding/reinstalling).
         - mysqladmin -f drop tugboat && mysqladmin create tugboat
