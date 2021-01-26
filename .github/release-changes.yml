@@ -1,7 +1,7 @@
 # Labeler configuration.
 # @see https://github.com/marketplace/actions/labeler#create-githublabeleryml
 
-release-changes:
+release-change:
   - '/.htaccess'
   - '/index.php'
   - '/robots.txt'
